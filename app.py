@@ -42,11 +42,11 @@ def generate_image_with_diffuser(prompt, negative_prompt, aspect_ratio, seed, ou
 def generate_image():
     st.title("Text to Image Generation with Diffuser")
 
-    prompt = st.text_area("Prompt", "A cinematic shot of a baby racoon wearing an intricate Italian priest robe.")
+    prompt = st.text_area("Prompt", "")
     negative_prompt = st.text_input("Negative Prompt", "")
     aspect_ratio = st.selectbox("Aspect Ratio", ['1:1', '16:9', '21:9'])
-    seed = st.number_input("Seed", min_value=0, max_value=9999, value=25, step=1)
-    output_format = st.selectbox("Output Format", ['png', 'jpg'])
+    seed = 1000
+    output_format = "png"
     lighting_condition = st.selectbox("Lighting Condition", ['Natural', 'Studio', 'Dark', 'Bright'])
     background = st.selectbox("Background", ['Plain', 'Patterned', 'Outdoor', 'Indoor'])
     angle = st.selectbox("Angle", ['Front', 'Side', 'Top', 'Perspective'])
@@ -93,12 +93,10 @@ def product_recognition_filter():
 
             st.image(annotated_image, caption="Annotated Image", use_column_width=True)
 
-            # Show detected labels with larger font size
             st.subheader("Detected Labels")
             detected_labels = ", ".join(set(labels))
             st.write(detected_labels, font="Helvetica 30")
 
-# Function for image segmentation and background change
 def image_segmentation_and_background_change():
     st.title("Exclusion of Non-Relevant Images")
 
@@ -116,19 +114,12 @@ def image_segmentation_and_background_change():
 
         st.write("Segmenting and Changing Background...")
 
-        # Replace with your segmentation function call
         orig_img, mask, diffused_img = segmentation_app(img_path=img_path, label=label, prompt=prompt, seed=seed)
-
-        # Example placeholder outputs
-        # orig_img = np.array(image)  # Placeholder
-        # mask = np.zeros_like(orig_img)  # Placeholder
-        # diffused_img = np.ones_like(orig_img) * 255  # Placeholder
 
         st.image(orig_img, caption='Original Image with Segmentation', use_column_width=True)
         st.image(mask, caption='Segmentation Mask', use_column_width=True)
         st.image(diffused_img, caption='Processed Image', use_column_width=True)
 
-# Main Streamlit application
 def main():
     st.title("Integrated Image Processing Application")
 
